@@ -37,25 +37,6 @@ from pathlib import Path
 from typing import Literal
 from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
 
-LEFT_INIT_POS = [
-    -0.05664911866188049,
-    -0.26874953508377075,
-    0.5613412857055664,
-    1.483367681503296,
-    -1.1999313831329346,
-    -1.3498512506484985,
-    0,
-]
-RIGHT_INIT_POS = [
-    -0.05664911866188049,
-    -0.26874953508377075,
-    0.5613412857055664,
-    -1.483367681503296,
-    1.1999313831329346,
-    1.3498512506484985,
-    0,
-]
-
 motors = [
     "left_waist",
     "left_shoulder",
@@ -95,13 +76,6 @@ def process_custom_format(lerobot_dataset: LeRobotDataset, raw_dir: Path):
         )
         action = np.concatenate(
             [qaction[:, :6], gripper_action[:, 0:1], qaction[:, 6:], gripper_action[:, 1:2]], axis=1
-        )
-    elif qpos.shape[-1] == 6:
-        state = np.concatenate(
-            [np.tile(LEFT_INIT_POS, (ep_len, 1)), qpos, gripper_pos], axis=1
-        )
-        action = np.concatenate(
-            [np.tile(LEFT_INIT_POS, (ep_len, 1)), qaction, gripper_action], axis=1
         )
     else:
         raise ValueError("Unexpected qpos dimension.")
