@@ -209,6 +209,7 @@ def main():
         features=features,
         image_writer_threads=args.image_writer_threads,
         image_writer_processes=args.image_writer_process,
+        video_backend="pyav",
     )
 
     # 批量处理所有文件夹
